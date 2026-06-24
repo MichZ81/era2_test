@@ -10,4 +10,4 @@ export type {
   TaskStatus,
 } from "./model/types";
 
-export { GEN_TYPES, TASK_STATUSES } from "./model/types";
+export { GEN_TYPES, TASK_STATUS, TASK_STATUSES } from "./model/types";

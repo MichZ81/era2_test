@@ -2,15 +2,17 @@ export const GEN_TYPES = ["text", "image", "video", "audio"] as const;
 
 export type GenType = (typeof GEN_TYPES)[number];
 
-export const TASK_STATUSES = [
-  "queued",
-  "running",
-  "done",
-  "failed",
-  "canceled",
-] as const;
+export const TASK_STATUS = {
+  queued: "queued",
+  running: "running",
+  done: "done",
+  failed: "failed",
+  canceled: "canceled",
+} as const;
 
-export type TaskStatus = (typeof TASK_STATUSES)[number];
+export type TaskStatus = (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
+
+export const TASK_STATUSES = Object.values(TASK_STATUS);
 
 export type GenerationTaskId = string;
 export type IsoDateString = string;
