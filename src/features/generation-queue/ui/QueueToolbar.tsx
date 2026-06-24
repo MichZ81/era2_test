@@ -1,3 +1,4 @@
+import { type ChangeEvent, useCallback } from "react";
 import { Search } from "lucide-react";
 
 import { TASK_STATUS } from "@/entities/generation-task";
@@ -85,6 +86,27 @@ export function QueueToolbar({
   const activeSort = query.sort ?? "newest";
   const activeType = query.type ?? "all";
 
+  const handleTypeChange = useCallback(
+    (value: QueueTypeFilter) => {
+      onTypeChange?.(value);
+    },
+    [onTypeChange],
+  );
+
+  const handleSortChange = useCallback(
+    (value: QueueSort) => {
+      onSortChange(value);
+    },
+    [onSortChange],
+  );
+
+  const handleSearchChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      onSearchChange(event.target.value);
+    },
+    [onSearchChange],
+  );
+
   return (
     <div
       className={cn(
@@ -97,7 +119,8 @@ export function QueueToolbar({
           <QueueFilterChip
             active={activeStatus === filter.value}
             key={filter.value}
-            onClick={() => onStatusChange(filter.value)}
+            onSelect={onStatusChange}
+            value={filter.value}
           >
             {filter.label}
           </QueueFilterChip>
@@ -108,7 +131,7 @@ export function QueueToolbar({
         {showTypeFilter && (
           <QueueSelect
             label="Тип"
-            onValueChange={(value) => onTypeChange?.(value as QueueTypeFilter)}
+            onValueChange={handleTypeChange}
             options={TYPE_OPTIONS}
             value={activeType}
           />
@@ -116,7 +139,7 @@ export function QueueToolbar({
 
         <QueueSelect
           label="Сортировка"
-          onValueChange={(value) => onSortChange(value as QueueSort)}
+          onValueChange={handleSortChange}
           options={SORT_OPTIONS}
           value={activeSort}
         />
@@ -126,7 +149,7 @@ export function QueueToolbar({
           <Search className="pointer-events-none absolute left-5 top-1/2 size-5 -translate-y-1/2 text-[var(--c-fg-low)]" />
           <Input
             className="h-[62px] rounded-full border-[var(--c-line)] bg-[var(--c-bg-1)] pl-13 pr-5 text-[18px] text-[var(--c-fg)] placeholder:text-[var(--c-fg-low)] focus-visible:ring-[var(--c-accent)]"
-            onChange={(event) => onSearchChange(event.target.value)}
+            onChange={handleSearchChange}
             placeholder="Поиск"
             type="search"
             value={query.search ?? ""}
