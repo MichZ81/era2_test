@@ -1,5 +1,6 @@
 export { useQueue, QueueContext } from "./model/useQueue";
 export { TaskCard } from "./ui/TaskCard";
+export { QueueToolbar } from "./ui/QueueToolbar";
 export { TaskRow } from "./ui/TaskRow";
 
 export type {
@@ -10,6 +11,7 @@ export type {
 
 export type { TaskRowProps } from "./ui/TaskRow";
 export type { TaskCardProps } from "./ui/TaskCard";
+export type { QueueToolbarProps } from "./ui/QueueToolbar";
 
 export {
   selectActiveTasks,
