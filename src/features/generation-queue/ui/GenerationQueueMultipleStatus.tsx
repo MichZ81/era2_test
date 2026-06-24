@@ -1,4 +1,4 @@
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, Minimize2 } from "lucide-react";
 
 import { TASK_STATUS, type GenerationTask } from "@/entities/generation-task";
 import { Link } from "@/shared/routing";
@@ -19,6 +19,9 @@ export interface GenerationQueueMultipleStatusProps {
 
   /** Первые задачи для мини-списка. */
   previewTasks: readonly GenerationTask[];
+
+  /** Сворачивает глобальный статус-бар в пилюлю. */
+  onCollapse: () => void;
 }
 
 /** Раскрытый глобальный статус-бар для нескольких активных генераций. */
@@ -26,6 +29,7 @@ export function GenerationQueueMultipleStatus({
   totalActive,
   averageProgress,
   previewTasks,
+  onCollapse,
 }: GenerationQueueMultipleStatusProps) {
   return (
     <div className="rounded-t-[24px] border border-[var(--c-line)] bg-[var(--c-bg-1)] p-4 text-[var(--c-fg)] shadow-[0_22px_90px_rgba(0,0,0,0.48)] backdrop-blur-xl sm:rounded-[24px]">
@@ -41,7 +45,17 @@ export function GenerationQueueMultipleStatus({
             value={averageProgress}
           />
         </div>
-        <Loader2 className="mt-0.5 size-5 shrink-0 animate-spin text-[var(--c-accent-2)]" />
+        <div className="flex shrink-0 items-center gap-2">
+          <Loader2 className="size-5 animate-spin text-[var(--c-accent-2)]" />
+          <button
+            aria-label="Свернуть статус генераций"
+            className="flex size-8 items-center justify-center rounded-xl border border-[var(--c-line)] text-[var(--c-fg-dim)] transition-colors hover:border-[var(--c-line-2)] hover:text-[var(--c-fg)]"
+            onClick={onCollapse}
+            type="button"
+          >
+            <Minimize2 className="size-4" />
+          </button>
+        </div>
       </div>
 
       <ul className="mt-4 space-y-3">
