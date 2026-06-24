@@ -1,10 +1,13 @@
 export { useQueue, QueueContext } from "./model/useQueue";
+export { TaskRow } from "./ui/TaskRow";
 
 export type {
   QueueActions,
   QueueContextValue,
   QueueViewControls,
 } from "./model/useQueue";
+
+export type { TaskRowProps } from "./ui/TaskRow";
 
 export {
   selectActiveTasks,
