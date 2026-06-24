@@ -10,4 +10,5 @@ export type {
   TaskStatus,
 } from "./model/types";
 
+export { generationTaskSeed } from "./model/seed";
 export { GEN_TYPES, TASK_STATUS, TASK_STATUSES } from "./model/types";
