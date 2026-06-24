@@ -1,1 +1,1 @@
-export {};
+export { GenerationQueue } from "./ui/GenerationQueue";
