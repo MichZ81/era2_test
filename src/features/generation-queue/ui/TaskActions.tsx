@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   Download,
   MoreHorizontal,
@@ -49,6 +50,21 @@ export function TaskActions({
   onDelete,
 }: TaskActionsProps) {
   const primaryAction = getPrimaryAction(status);
+  const handleCancel = useCallback(() => {
+    onCancel?.(taskId);
+  }, [onCancel, taskId]);
+
+  const handleRetry = useCallback(() => {
+    onRetry?.(taskId);
+  }, [onRetry, taskId]);
+
+  const handleDownload = useCallback(() => {
+    onDownload?.(taskId);
+  }, [onDownload, taskId]);
+
+  const handleDelete = useCallback(() => {
+    onDelete?.(taskId);
+  }, [onDelete, taskId]);
 
   return (
     <div className="flex items-center gap-2">
@@ -56,7 +72,7 @@ export function TaskActions({
         <Button
           aria-label="Отменить задачу"
           className="h-14 w-14 rounded-[14px] border-[var(--c-line)] bg-transparent text-[var(--c-fg-mute)] hover:bg-white/[0.04] hover:text-[var(--c-fg)]"
-          onClick={() => onCancel?.(taskId)}
+          onClick={handleCancel}
           size="icon"
           type="button"
           variant="outline"
@@ -69,7 +85,7 @@ export function TaskActions({
         <Button
           aria-label="Повторить задачу"
           className="h-14 w-14 rounded-[14px]"
-          onClick={() => onRetry?.(taskId)}
+          onClick={handleRetry}
           size="icon"
           type="button"
           variant="outline"
@@ -82,7 +98,7 @@ export function TaskActions({
         <Button
           aria-label="Скачать результат"
           className="h-14 w-14 rounded-[14px]"
-          onClick={() => onDownload?.(taskId)}
+          onClick={handleDownload}
           size="icon"
           type="button"
           variant="outline"
@@ -106,7 +122,7 @@ export function TaskActions({
         <DropdownMenuContent align="end" className="min-w-40">
           <DropdownMenuItem
             className="text-red-300 focus:text-red-200"
-            onClick={() => onDelete?.(taskId)}
+            onClick={handleDelete}
           >
             <Trash2 className="size-4" />
             Удалить
