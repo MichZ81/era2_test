@@ -4,6 +4,7 @@ export { TaskCard } from "./ui/TaskCard";
 export { QueueStats } from "./ui/QueueStats";
 export { QueueToolbar } from "./ui/QueueToolbar";
 export { TaskRow } from "./ui/TaskRow";
+export { GenerationQueueStatusBar } from "./ui/GenerationQueueStatusBar";
 export { EmptyState } from "./ui/states/EmptyState";
 export { ErrorState } from "./ui/states/ErrorState";
 export { LoadingState } from "./ui/states/LoadingState";

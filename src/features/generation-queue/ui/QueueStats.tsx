@@ -56,7 +56,7 @@ export function QueueStats({
     <section
       aria-label="Сводка по очереди генераций"
       className={cn(
-        "grid gap-5",
+        "grid gap-3 sm:gap-5",
         layout === "adaptive"
           ? "grid-cols-2 lg:grid-cols-4"
           : "grid-cols-4",
