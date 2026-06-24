@@ -1,0 +1,66 @@
+import { useMemo } from "react";
+
+import { TASK_STATUS, type GenerationTask } from "@/entities/generation-task";
+import { cn } from "@/shared/lib/utils";
+
+import { useQueue } from "../model/useQueue";
+import { GenerationQueueMultipleStatus } from "./GenerationQueueMultipleStatus";
+import { GenerationQueueSingleStatus } from "./GenerationQueueSingleStatus";
+
+/** Глобальный статус-бар активных генераций поверх любого экрана. */
+export function GenerationQueueStatusBar() {
+  const { activeTasks, stats, state } = useQueue();
+  const isReady = state.loadStatus === "ready";
+  const previewTasks = useMemo(
+    () => getPreviewTasks(activeTasks),
+    [activeTasks],
+  );
+
+  if (!isReady || activeTasks.length === 0) {
+    return null;
+  }
+
+  const averageProgress = stats.averageActiveProgress;
+
+  return (
+    <aside
+      aria-label="Активные генерации"
+      className={cn(
+        "fixed bottom-0 left-0 right-0 z-[80] px-3 pb-[max(12px,env(safe-area-inset-bottom))] sm:bottom-6 sm:left-auto sm:right-6 sm:w-[380px] sm:p-0",
+      )}
+    >
+      {activeTasks.length === 1 ? (
+        <GenerationQueueSingleStatus task={activeTasks[0]} />
+      ) : (
+        <GenerationQueueMultipleStatus
+          averageProgress={averageProgress}
+          previewTasks={previewTasks}
+          totalActive={activeTasks.length}
+        />
+      )}
+    </aside>
+  );
+}
+
+/** Берет 2-3 активные задачи: running выше queued, затем FIFO по createdAt. */
+function getPreviewTasks(tasks: readonly GenerationTask[]) {
+  return [...tasks]
+    .sort(compareActiveTasks)
+    .slice(0, 3);
+}
+
+/** Сортирует активные задачи для мини-списка статус-бара. */
+function compareActiveTasks(left: GenerationTask, right: GenerationTask) {
+  const statusDiff = getActiveStatusOrder(left) - getActiveStatusOrder(right);
+
+  if (statusDiff !== 0) {
+    return statusDiff;
+  }
+
+  return new Date(left.createdAt).getTime() - new Date(right.createdAt).getTime();
+}
+
+/** Возвращает приоритет активного статуса для статус-бара. */
+function getActiveStatusOrder(task: GenerationTask) {
+  return task.status === TASK_STATUS.running ? 0 : 1;
+}

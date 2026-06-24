@@ -1,12 +1,6 @@
-import { QueueProvider } from "@/features/generation-queue";
-
 import { GenerationQueueContent } from "./GenerationQueueContent";
 
-/** Виджет экрана очереди: поднимает provider и рендерит композицию экрана. */
+/** Виджет экрана очереди: рендерит композицию, читая глобальный provider приложения. */
 export function GenerationQueue() {
-  return (
-    <QueueProvider>
-      <GenerationQueueContent />
-    </QueueProvider>
-  );
+  return <GenerationQueueContent />;
 }
