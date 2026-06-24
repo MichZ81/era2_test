@@ -1,4 +1,5 @@
 export { useQueue, QueueContext } from "./model/useQueue";
+export { QueueProvider } from "./model/QueueProvider";
 export { TaskCard } from "./ui/TaskCard";
 export { QueueToolbar } from "./ui/QueueToolbar";
 export { TaskRow } from "./ui/TaskRow";
@@ -8,6 +9,7 @@ export type {
   QueueContextValue,
   QueueViewControls,
 } from "./model/useQueue";
+export type { QueueProviderProps } from "./model/QueueProvider";
 
 export type { TaskRowProps } from "./ui/TaskRow";
 export type { TaskCardProps } from "./ui/TaskCard";
