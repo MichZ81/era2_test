@@ -33,7 +33,10 @@ export function LoadingState({ rows = 4, className }: LoadingStateProps) {
 
       <div className="space-y-4">
         {Array.from({ length: rows }).map((_, index) => (
-          <Skeleton className="h-[164px] rounded-[30px]" key={index} />
+          <Skeleton
+            className="h-[134px] rounded-[16px] md:h-[89px]"
+            key={index}
+          />
         ))}
       </div>
     </section>
