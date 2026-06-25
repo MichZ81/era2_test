@@ -1,9 +1,7 @@
-import { type ChangeEvent, useCallback } from "react";
-import { Search } from "lucide-react";
+import { useCallback } from "react";
 
 import { TASK_STATUS } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
-import { Input } from "@/shared/ui/input";
 import { QueueFilterChip } from "@/shared/ui/queue-filter-chip";
 import { QueueSelect } from "@/shared/ui/queue-select";
 
@@ -15,7 +13,7 @@ import type {
 } from "../model/selectors";
 
 export interface QueueToolbarProps {
-  /** Текущее состояние фильтров, поиска и сортировки. */
+  /** Текущее состояние фильтров и сортировки. */
   query: QueueListQuery;
 
   /** Дополнительные классы для встраивания тулбара в виджет. */
@@ -30,9 +28,6 @@ export interface QueueToolbarProps {
   /** Вызывается при выборе сортировки. */
   onSortChange: (sort: QueueSort) => void;
 
-  /** Вызывается при вводе поисковой строки. */
-  onSearchChange: (search: string) => void;
-
   /** Вызывается при выборе типа генерации, если showTypeFilter включен. */
   onTypeChange?: (type: QueueTypeFilter) => void;
 }
@@ -41,12 +36,13 @@ export interface QueueToolbarProps {
 const STATUS_FILTERS: Array<{
   value: QueueStatusFilter;
   label: string;
+  className: string;
 }> = [
-  { value: "all", label: "Все" },
-  { value: TASK_STATUS.queued, label: "В очереди" },
-  { value: TASK_STATUS.running, label: "Идет" },
-  { value: TASK_STATUS.done, label: "Готово" },
-  { value: TASK_STATUS.failed, label: "Ошибка" },
+  { value: "all", label: "Все", className: "w-[52px]" },
+  { value: TASK_STATUS.queued, label: "В очереди", className: "w-[95px]" },
+  { value: TASK_STATUS.running, label: "Идет", className: "w-[62px]" },
+  { value: TASK_STATUS.done, label: "Готово", className: "w-[72px]" },
+  { value: TASK_STATUS.failed, label: "Ошибка", className: "w-[79px]" },
 ];
 
 /** Опции сортировки из ТЗ и бонусные варианты селекторов. */
@@ -72,14 +68,13 @@ const TYPE_OPTIONS: Array<{
   { value: "audio", label: "Аудио" },
 ];
 
-/** Тулбар очереди: чипы статусов, сортировка и поиск. */
+/** Тулбар очереди: чипы статусов и сортировка. */
 export function QueueToolbar({
   query,
   className,
   showTypeFilter,
   onStatusChange,
   onSortChange,
-  onSearchChange,
   onTypeChange,
 }: QueueToolbarProps) {
   const activeStatus = query.status ?? "all";
@@ -100,24 +95,18 @@ export function QueueToolbar({
     [onSortChange],
   );
 
-  const handleSearchChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      onSearchChange(event.target.value);
-    },
-    [onSearchChange],
-  );
-
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between",
+        "no-scrollbar -mx-4 flex h-[34px] w-[calc(100%+32px)] flex-row items-center gap-3 overflow-x-auto px-4 md:mx-0 md:w-full md:flex-none md:overflow-visible md:px-0 lg:justify-start",
         className,
       )}
     >
-      <div className="no-scrollbar -mx-1 flex items-center gap-3 overflow-x-auto px-1">
+      <div className="flex h-[34px] w-[392px] flex-none items-start gap-2">
         {STATUS_FILTERS.map((filter) => (
           <QueueFilterChip
             active={activeStatus === filter.value}
+            className={filter.className}
             key={filter.value}
             onSelect={onStatusChange}
             value={filter.value}
@@ -127,7 +116,12 @@ export function QueueToolbar({
         ))}
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <span
+        aria-hidden="true"
+        className="h-px w-[10px] flex-none"
+      />
+
+      <div className="flex h-[34px] flex-none flex-row items-center gap-3">
         {showTypeFilter && (
           <QueueSelect
             label="Тип"
@@ -138,23 +132,12 @@ export function QueueToolbar({
         )}
 
         <QueueSelect
+          className="w-[135px] min-w-[135px] [&>span:first-child]:w-[98px]"
           label="Сортировка"
           onValueChange={handleSortChange}
           options={SORT_OPTIONS}
           value={activeSort}
         />
-
-        <label className="relative block min-w-0 sm:w-[280px]">
-          <span className="sr-only">Поиск по задачам</span>
-          <Search className="pointer-events-none absolute left-5 top-1/2 size-5 -translate-y-1/2 text-[var(--c-fg-low)]" />
-          <Input
-            className="h-[62px] rounded-full border-[var(--c-line)] bg-[var(--c-bg-1)] pl-13 pr-5 text-[18px] text-[var(--c-fg)] placeholder:text-[var(--c-fg-low)] focus-visible:ring-[var(--c-accent)]"
-            onChange={handleSearchChange}
-            placeholder="Поиск"
-            type="search"
-            value={query.search ?? ""}
-          />
-        </label>
       </div>
     </div>
   );

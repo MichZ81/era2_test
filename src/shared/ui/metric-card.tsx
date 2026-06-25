@@ -30,24 +30,22 @@ export function MetricCard({
       className={cn(
         "rounded-[26px] border border-[var(--c-line)] bg-[var(--c-bg)]",
         size === "compact"
-          ? "min-h-[82px] rounded-[16px] px-4 py-3.5 sm:min-h-[164px] sm:rounded-[26px] sm:px-7 sm:py-7"
-          : "min-h-[168px] px-8 py-7",
+          ? "h-[93px] rounded-[16px] px-4 py-3.5 sm:rounded-[26px] sm:px-6 sm:py-3.5"
+          : "h-[93px] px-6 py-3.5",
         className,
       )}
     >
       <div
         className={cn(
           "flex items-center whitespace-nowrap font-medium leading-none text-[var(--c-fg-mute)]",
-          size === "compact"
-            ? "gap-2 text-[13px] sm:gap-3 sm:text-[26px]"
-            : "gap-4 text-[22px]",
+          size === "compact" ? "gap-2 text-[13px] sm:gap-3" : "gap-3 text-[13px]",
         )}
       >
         <span
           aria-hidden="true"
           className={cn(
             "rounded-full",
-            size === "compact" ? "size-2 sm:size-4" : "size-3.5",
+            size === "compact" ? "size-2 sm:size-2.5" : "size-2.5",
             dotClassName,
           )}
         />
@@ -57,9 +55,7 @@ export function MetricCard({
       <div
         className={cn(
           "font-mono font-bold leading-none text-[var(--c-fg)] tabular-nums",
-          size === "compact"
-            ? "mt-4 text-[24px] sm:mt-7 sm:text-[48px]"
-            : "mt-8 text-[52px]",
+          size === "compact" ? "mt-2.5 text-[24px] sm:mt-2.5" : "mt-2.5 text-[28px]",
         )}
       >
         {value}

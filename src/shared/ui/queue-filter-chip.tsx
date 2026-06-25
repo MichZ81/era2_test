@@ -15,6 +15,9 @@ export interface QueueFilterChipProps<TValue extends string = string> {
 
   /** Вызывается при выборе фильтра. */
   onSelect: (value: TValue) => void;
+
+  /** Дополнительные классы для точной ширины в конкретном тулбаре. */
+  className?: string;
 }
 
 /** Скругленный чип фильтра для тулбаров. */
@@ -23,6 +26,7 @@ export function QueueFilterChip<TValue extends string = string>({
   value,
   children,
   onSelect,
+  className,
 }: QueueFilterChipProps<TValue>) {
   const handleClick = useCallback(() => {
     onSelect(value);
@@ -33,10 +37,11 @@ export function QueueFilterChip<TValue extends string = string>({
       active={active}
       aria-pressed={active}
       className={cn(
-        "h-[62px] shrink-0 px-7 text-[22px] font-semibold",
+        "h-[34px] shrink-0 justify-center whitespace-nowrap rounded-full px-[14px] text-[13px] font-medium leading-[17px]",
         active
-          ? "border-[var(--c-accent)] bg-[var(--c-accent)] text-white shadow-[0_12px_32px_-16px_rgba(232,84,32,0.75)]"
-          : "border-[var(--c-line)] bg-[var(--c-bg-1)] text-[var(--c-fg-mute)] hover:border-[var(--c-line-2)] hover:text-[var(--c-fg)]",
+          ? "border-[#E85420] bg-[#E85420] text-white shadow-none"
+          : "border-[#2D2420] bg-[#1A1514] text-[#C8BEB6] hover:border-[#3A302B] hover:text-[#F6EFE9]",
+        className,
       )}
       onClick={handleClick}
     >

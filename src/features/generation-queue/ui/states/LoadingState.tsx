@@ -18,17 +18,17 @@ export function LoadingState({ rows = 4, className }: LoadingStateProps) {
     >
       <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
         {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton className="h-[168px] rounded-[26px]" key={index} />
+          <Skeleton className="h-[93px] rounded-[26px]" key={index} />
         ))}
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-3 overflow-hidden">
           {Array.from({ length: 5 }).map((_, index) => (
-            <Skeleton className="h-[62px] w-36 shrink-0 rounded-full" key={index} />
+            <Skeleton className="h-[34px] w-36 shrink-0 rounded-full" key={index} />
           ))}
         </div>
-        <Skeleton className="h-[62px] w-full rounded-full sm:w-[248px]" />
+        <Skeleton className="h-[34px] w-full rounded-full sm:w-[248px]" />
       </div>
 
       <div className="space-y-4">

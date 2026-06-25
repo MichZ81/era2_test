@@ -38,6 +38,9 @@ export interface TaskActionsProps {
 
   /** Удаление задачи из меню дополнительных действий. */
   onDelete?: (id: GenerationTaskId) => void;
+
+  /** Компактный режим для блока управления в строке или мобильной карточке. */
+  variant?: "default" | "taskRow" | "taskCard";
 }
 
 /** Кнопки действий строки: главное действие по статусу и меню с удалением. */
@@ -48,8 +51,26 @@ export function TaskActions({
   onRetry,
   onDownload,
   onDelete,
+  variant = "default",
 }: TaskActionsProps) {
   const primaryAction = getPrimaryAction(status);
+  const isTaskRowVariant = variant === "taskRow";
+  const isTaskCardVariant = variant === "taskCard";
+  const isCompactVariant = isTaskRowVariant || isTaskCardVariant;
+  const neutralButtonClassName = isTaskRowVariant
+    ? "h-[32px] w-[32px] flex-none rounded-[8px] border border-[#2D2420] bg-[#1A1514] p-0 text-[var(--c-fg-mute)] hover:border-[#3A302B] hover:bg-[#211B19] hover:text-[var(--c-fg)]"
+    : isTaskCardVariant
+      ? "h-[34px] w-[34px] flex-none rounded-[8px] border border-[#2D2420] bg-[#1A1514] p-0 text-[#8A7F78] hover:border-[#3A302B] hover:bg-[#211B19] hover:text-[#F6EFE9]"
+    : "h-14 w-14 rounded-[14px] border-[var(--c-line)] bg-transparent text-[var(--c-fg-mute)] hover:bg-white/[0.04] hover:text-[var(--c-fg)]";
+  const primaryButtonClassName = isCompactVariant
+    ? `${neutralButtonClassName}${
+        isTaskCardVariant && primaryAction !== "cancel"
+          ? " text-[#FF7A3D] hover:text-[#FF7A3D]"
+          : ""
+      }`
+    : "h-14 w-14 rounded-[14px]";
+  const iconClassName = isCompactVariant ? "size-3.5" : "size-5";
+  const largeIconClassName = isCompactVariant ? "size-3.5" : "size-6";
   const handleCancel = useCallback(() => {
     onCancel?.(taskId);
   }, [onCancel, taskId]);
@@ -67,43 +88,51 @@ export function TaskActions({
   }, [onDelete, taskId]);
 
   return (
-    <div className="flex items-center gap-2">
+    <div
+      className={
+        isTaskRowVariant
+          ? "order-2 flex h-[32px] w-[70px] flex-none items-start gap-1.5"
+          : isTaskCardVariant
+            ? "flex h-[34px] w-[74px] flex-none items-start gap-1.5"
+            : "flex items-center gap-2"
+      }
+    >
       {primaryAction === "cancel" && (
         <Button
           aria-label="Отменить задачу"
-          className="h-14 w-14 rounded-[14px] border-[var(--c-line)] bg-transparent text-[var(--c-fg-mute)] hover:bg-white/[0.04] hover:text-[var(--c-fg)]"
+          className={neutralButtonClassName}
           onClick={handleCancel}
           size="icon"
           type="button"
           variant="outline"
         >
-          <X className="size-6" />
+          <X className={largeIconClassName} />
         </Button>
       )}
 
       {primaryAction === "retry" && (
         <Button
           aria-label="Повторить задачу"
-          className="h-14 w-14 rounded-[14px]"
+          className={primaryButtonClassName}
           onClick={handleRetry}
           size="icon"
           type="button"
           variant="outline"
         >
-          <RotateCcw className="size-5" />
+          <RotateCcw className={iconClassName} />
         </Button>
       )}
 
       {primaryAction === "download" && (
         <Button
           aria-label="Скачать результат"
-          className="h-14 w-14 rounded-[14px]"
+          className={primaryButtonClassName}
           onClick={handleDownload}
           size="icon"
           type="button"
           variant="outline"
         >
-          <Download className="size-5" />
+          <Download className={iconClassName} />
         </Button>
       )}
 
@@ -111,12 +140,12 @@ export function TaskActions({
         <DropdownMenuTrigger asChild>
           <Button
             aria-label="Открыть меню задачи"
-            className="h-14 w-14 rounded-[14px] border-[var(--c-line)] bg-transparent text-[var(--c-fg-mute)] hover:bg-white/[0.04] hover:text-[var(--c-fg)]"
+            className={neutralButtonClassName}
             size="icon"
             type="button"
             variant="outline"
           >
-            <MoreHorizontal className="size-6" />
+            <MoreHorizontal className={largeIconClassName} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-40">

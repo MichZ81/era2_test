@@ -5,8 +5,10 @@ import {
   type GenerationTask,
   type GenerationTaskId,
   type GenType,
+  type TaskStatus,
 } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
+import { TaskIcon } from "@/shared/ui/task-icon";
 
 import { formatCredits, formatEta } from "../lib/formatEta";
 import { ProgressBar } from "./ProgressBar";
@@ -58,15 +60,15 @@ export function TaskCard({
   return (
     <article
       className={cn(
-        "rounded-[28px] border bg-[var(--c-bg)] p-7 transition-colors",
+        "box-border flex w-full flex-none flex-col items-start gap-3 self-stretch rounded-[16px] border bg-[#141110] p-[14px] transition-colors",
         isRunning
-          ? "border-[rgba(232,84,32,0.7)] shadow-[0_0_0_1px_rgba(232,84,32,0.16)]"
-          : "border-[var(--c-line)]",
+          ? "border-[rgba(232,84,32,0.35)]"
+          : "border-[#2D2420]",
         className,
       )}
     >
-      <div className="grid grid-cols-[96px_minmax(0,1fr)] gap-6">
-        <div className="flex size-24 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--c-bg-1)] ring-1 ring-white/[0.03]">
+      <div className="flex w-full flex-none flex-row items-start gap-3">
+        <TaskIcon className="size-12 overflow-hidden text-[var(--c-accent-2)]">
           {task.previewUrl ? (
             <img
               alt=""
@@ -75,54 +77,57 @@ export function TaskCard({
               src={task.previewUrl}
             />
           ) : (
-            <div className="flex size-full items-center justify-center bg-[radial-gradient(circle_at_35%_30%,rgba(232,84,32,0.22),transparent_36%),linear-gradient(135deg,var(--c-bg-2),var(--c-bg))] text-[var(--c-accent-2)]">
-              <TypeIcon className="size-8" strokeWidth={2.3} />
-            </div>
+            <TypeIcon className="size-[18px]" strokeWidth={2.3} />
           )}
-        </div>
+        </TaskIcon>
 
-        <div className="min-w-0 pt-1">
-          <h3 className="line-clamp-2 text-[28px] font-semibold leading-[1.18] text-[var(--c-fg)]">
+        <div className="flex min-w-0 flex-1 flex-col items-start gap-1.5">
+          <h3 className="line-clamp-2 w-full text-[15px] font-medium leading-5 text-[#F6EFE9]">
             {task.prompt}
           </h3>
 
-          <div className="mt-5 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 text-[22px] leading-none text-[var(--c-fg-mute)]">
-            <span className="flex max-w-full items-center gap-3 rounded-full bg-[var(--c-bg-1)] px-4 py-2 font-mono text-[20px] ring-1 ring-white/[0.03]">
-              <span className="size-3 shrink-0 rounded-full bg-[var(--c-accent)]" />
+          <div className="flex h-[22px] w-full flex-none flex-row flex-wrap items-center content-start gap-x-2 gap-y-1">
+            <span className="flex h-[22px] max-w-full flex-none items-center gap-1.5 rounded-full bg-[#1A1514] px-2 py-[3px] font-mono text-[12px] font-normal leading-4 text-[#C8BEB6]">
+              <span className="size-1.5 shrink-0 rounded-full bg-[#E85420]" />
               <span className="truncate">
                 {task.model.name}
                 {task.model.version ? ` ${task.model.version}` : ""}
               </span>
             </span>
-            <span className="font-mono text-[var(--c-fg-mute)]">
+            <span className="truncate text-[12px] font-normal leading-4 text-[#8A7F78]">
               {metaItems.join(" · ")}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="mt-8">
-        <ProgressBar isActive={isRunning} value={task.progress} />
-        {task.status === TASK_STATUS.failed && task.error && (
-          <p className="mt-3 line-clamp-2 text-sm leading-5 text-red-300">
-            {task.error.message}
-          </p>
-        )}
-      </div>
+      {isRunning && (
+        <ProgressBar
+          className="h-[5px] w-full flex-none bg-[#221C19]"
+          indicatorClassName="bg-[linear-gradient(135deg,#E85421_0%,#FF7A3D_70.72%)] shadow-none"
+          isActive
+          value={task.progress}
+        />
+      )}
 
-      <div className="mt-6 flex items-center justify-between gap-4">
-        <div className="flex min-w-0 items-center gap-4">
-          <StatusBadge className="h-[52px] min-w-[102px]" status={task.status} />
-          <span
-            className={cn(
-              "font-mono text-[24px] font-semibold tabular-nums",
-              isRunning
-                ? "text-[var(--c-accent-2)]"
-                : "text-[var(--c-fg-mute)]",
-            )}
-          >
-            {progressLabel}
-          </span>
+      <div className="flex h-[34px] w-full flex-none items-center justify-between">
+        <div className="flex h-[26px] flex-none items-center gap-2">
+          <StatusBadge
+            className={getTaskCardStatusClassName(task.status)}
+            status={task.status}
+          />
+          {isRunning && (
+            <span
+              className={cn(
+                "w-6 flex-none font-mono text-[13px] font-medium leading-[17px] tabular-nums",
+                isRunning
+                  ? "text-[var(--c-accent-2)]"
+                  : "text-[var(--c-fg-mute)]",
+              )}
+            >
+              {progressLabel}
+            </span>
+          )}
         </div>
 
         <TaskActions
@@ -132,6 +137,7 @@ export function TaskCard({
           onRetry={onRetry}
           status={task.status}
           taskId={task.id}
+          variant="taskCard"
         />
       </div>
     </article>
@@ -145,3 +151,19 @@ const TYPE_ICON: Record<GenType, typeof FileText> = {
   video: Video,
   audio: Music,
 };
+
+function getTaskCardStatusClassName(status: TaskStatus) {
+  if (status === TASK_STATUS.queued) {
+    return "w-[82px] bg-[#1A1514] text-[#8A7F78]";
+  }
+
+  if (status === TASK_STATUS.done) {
+    return "w-[61px] bg-[rgba(16,185,129,0.133333)] text-[#34D399]";
+  }
+
+  if (status === TASK_STATUS.failed) {
+    return "w-[67px] bg-[rgba(255,90,90,0.121569)] text-[#FF6B6B]";
+  }
+
+  return "w-[51px] bg-[#3A1A0A] text-[#FF7A3D]";
+}
