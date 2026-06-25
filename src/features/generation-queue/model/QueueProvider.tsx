@@ -9,9 +9,13 @@ import {
 } from "react";
 
 import {
+  GEN_TYPES,
+  TASK_STATUSES,
   generationTaskSeed,
   type GenerationTask,
   type GenerationTaskId,
+  type GenType,
+  type TaskStatus,
 } from "@/entities/generation-task";
 
 import { createQueueEngine, type QueueEngine } from "./queueEngine";
@@ -93,7 +97,7 @@ export function QueueProvider({ children }: QueueProviderProps) {
       const restoredTasks = readStoredTasks();
 
       if (restoredTasks) {
-        /** Решение по восстановлению: running-задачи остаются running, а engine подхватывает их и продолжает тики после restore. */
+        /** Решение по восстановлению: running-задачи редьюсер возвращает в queued, чтобы движок заново выдал слот без старых таймеров. */
         dispatch({
           type: "queue/tasksRestored",
           payload: {
@@ -308,12 +312,72 @@ function readStoredTasks() {
   try {
     const parsedTasks: unknown = JSON.parse(serializedTasks);
 
-    return Array.isArray(parsedTasks)
-      ? (parsedTasks as GenerationTask[])
-      : null;
+    if (!Array.isArray(parsedTasks)) {
+      localStorage.removeItem(STORAGE_KEY);
+
+      return null;
+    }
+
+    const validTasks = parsedTasks.filter(isStoredGenerationTask);
+
+    if (validTasks.length === 0) {
+      localStorage.removeItem(STORAGE_KEY);
+
+      return null;
+    }
+
+    return validTasks;
   } catch {
     localStorage.removeItem(STORAGE_KEY);
 
     return null;
   }
+}
+
+function isStoredGenerationTask(value: unknown): value is GenerationTask {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return (
+    typeof value.id === "string" &&
+    isGenerationType(value.type) &&
+    isTaskStatus(value.status) &&
+    typeof value.prompt === "string" &&
+    isGenerationModelRef(value.model) &&
+    typeof value.progress === "number" &&
+    typeof value.credits === "number" &&
+    typeof value.estimatedDurationSec === "number" &&
+    typeof value.createdAt === "string" &&
+    typeof value.updatedAt === "string"
+  );
+}
+
+function isGenerationModelRef(value: unknown) {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return (
+    typeof value.id === "string" &&
+    typeof value.name === "string" &&
+    isOptionalString(value.version) &&
+    isOptionalString(value.provider)
+  );
+}
+
+function isGenerationType(value: unknown): value is GenType {
+  return typeof value === "string" && GEN_TYPES.includes(value as GenType);
+}
+
+function isTaskStatus(value: unknown): value is TaskStatus {
+  return typeof value === "string" && TASK_STATUSES.includes(value as TaskStatus);
+}
+
+function isOptionalString(value: unknown) {
+  return value === undefined || typeof value === "string";
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }

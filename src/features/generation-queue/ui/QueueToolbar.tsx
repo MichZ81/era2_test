@@ -112,7 +112,7 @@ export function QueueToolbar({
   return (
     <div
       className={cn(
-        "no-scrollbar -mx-4 flex h-[34px] w-[calc(100%+32px)] flex-row items-center gap-3 overflow-x-auto px-4 md:mx-0 md:w-full md:flex-none md:overflow-visible md:px-0 lg:justify-start",
+        "no-scrollbar -mx-4 flex h-[34px] w-[calc(100%+32px)] flex-row items-center gap-3 overflow-x-auto px-4 md:mx-0 md:w-full md:flex-none md:px-0 lg:overflow-visible lg:justify-start",
         className,
       )}
     >

@@ -146,11 +146,19 @@ const TYPE_ICON: Record<GenType, typeof FileText> = {
 
 function getTaskRowStatusClassName(status: TaskStatus) {
   if (status === TASK_STATUS.queued) {
-    return "w-[82px]";
+    return "w-[82px] bg-[#1A1514] text-[#8A7F78]";
+  }
+
+  if (status === TASK_STATUS.done) {
+    return "w-[61px] bg-[rgba(16,185,129,0.133333)] text-[#34D399]";
+  }
+
+  if (status === TASK_STATUS.failed) {
+    return "w-[67px] bg-[rgba(255,90,90,0.121569)] text-[#FF6B6B]";
   }
 
   if (status === TASK_STATUS.canceled) {
-    return "w-[79px] bg-[#1A1514]";
+    return "w-[79px] bg-[#1A1514] text-[#8A7F78]";
   }
 
   return undefined;
