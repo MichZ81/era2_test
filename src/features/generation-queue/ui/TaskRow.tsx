@@ -5,11 +5,14 @@ import {
   type GenerationTask,
   type GenerationTaskId,
   type GenType,
+  type TaskStatus,
 } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
 import { TaskIcon } from "@/shared/ui/task-icon";
 
-import { formatCredits, formatEta } from "../lib/formatEta";
+import { formatCredits } from "../lib/formatEta";
+import { formatTaskTime, isTaskTimeLive } from "../lib/formatTaskTime";
+import { useCurrentTime } from "../lib/useCurrentTime";
 import { ProgressBar } from "./ProgressBar";
 import { StatusBadge } from "./StatusBadge";
 import { TaskActions } from "./TaskActions";
@@ -49,9 +52,10 @@ export function TaskRow({
 }: TaskRowProps) {
   const TypeIcon = TYPE_ICON[task.type];
   const isRunning = task.status === TASK_STATUS.running;
+  const nowMs = useCurrentTime(isTaskTimeLive(task.status));
   const progressLabel = `${Math.round(task.progress)}%`;
   const metaItems = [
-    formatEta(task.estimatedDurationSec),
+    formatTaskTime(task, nowMs),
     formatCredits(task.credits),
     queuePosition ? `#${queuePosition} в очереди` : null,
   ].filter(Boolean);
@@ -114,7 +118,7 @@ export function TaskRow({
         </div>
       </div>
 
-      <div className="flex h-[32px] w-[169px] flex-none items-center gap-3 whitespace-nowrap">
+      <div className="flex h-[32px] w-[200px] flex-none items-center gap-3 whitespace-nowrap">
         <span
           className={cn(
             "w-6 flex-none text-right font-mono text-[13px] font-medium leading-[17px] tabular-nums",
@@ -123,7 +127,10 @@ export function TaskRow({
         >
           {progressLabel}
         </span>
-        <StatusBadge status={task.status} />
+        <StatusBadge
+          className={getTaskRowStatusClassName(task.status)}
+          status={task.status}
+        />
         <TaskActions
           onCancel={onCancel}
           onDelete={onDelete}
@@ -145,3 +152,15 @@ const TYPE_ICON: Record<GenType, typeof FileText> = {
   video: Video,
   audio: Music,
 };
+
+function getTaskRowStatusClassName(status: TaskStatus) {
+  if (status === TASK_STATUS.queued) {
+    return "w-[82px]";
+  }
+
+  if (status === TASK_STATUS.canceled) {
+    return "w-[86px]";
+  }
+
+  return undefined;
+}

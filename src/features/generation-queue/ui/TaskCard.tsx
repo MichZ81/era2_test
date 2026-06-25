@@ -10,7 +10,9 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { TaskIcon } from "@/shared/ui/task-icon";
 
-import { formatCredits, formatEta } from "../lib/formatEta";
+import { formatCredits } from "../lib/formatEta";
+import { formatTaskTime, isTaskTimeLive } from "../lib/formatTaskTime";
+import { useCurrentTime } from "../lib/useCurrentTime";
 import { ProgressBar } from "./ProgressBar";
 import { StatusBadge } from "./StatusBadge";
 import { TaskActions } from "./TaskActions";
@@ -50,9 +52,10 @@ export function TaskCard({
 }: TaskCardProps) {
   const TypeIcon = TYPE_ICON[task.type];
   const isRunning = task.status === TASK_STATUS.running;
+  const nowMs = useCurrentTime(isTaskTimeLive(task.status));
   const progressLabel = `${Math.round(task.progress)}%`;
   const metaItems = [
-    formatEta(task.estimatedDurationSec),
+    formatTaskTime(task, nowMs),
     formatCredits(task.credits),
     queuePosition ? `#${queuePosition}` : null,
   ].filter(Boolean);
