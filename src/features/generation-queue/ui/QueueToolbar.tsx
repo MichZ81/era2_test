@@ -1,9 +1,7 @@
-import { type ChangeEvent, useCallback } from "react";
-import { Search } from "lucide-react";
+import { useCallback } from "react";
 
 import { TASK_STATUS } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
-import { Input } from "@/shared/ui/input";
 import { QueueFilterChip } from "@/shared/ui/queue-filter-chip";
 import { QueueSelect } from "@/shared/ui/queue-select";
 
@@ -15,7 +13,7 @@ import type {
 } from "../model/selectors";
 
 export interface QueueToolbarProps {
-  /** Текущее состояние фильтров, поиска и сортировки. */
+  /** Текущее состояние фильтров и сортировки. */
   query: QueueListQuery;
 
   /** Дополнительные классы для встраивания тулбара в виджет. */
@@ -29,9 +27,6 @@ export interface QueueToolbarProps {
 
   /** Вызывается при выборе сортировки. */
   onSortChange: (sort: QueueSort) => void;
-
-  /** Вызывается при вводе поисковой строки. */
-  onSearchChange: (search: string) => void;
 
   /** Вызывается при выборе типа генерации, если showTypeFilter включен. */
   onTypeChange?: (type: QueueTypeFilter) => void;
@@ -72,14 +67,13 @@ const TYPE_OPTIONS: Array<{
   { value: "audio", label: "Аудио" },
 ];
 
-/** Тулбар очереди: чипы статусов, сортировка и поиск. */
+/** Тулбар очереди: чипы статусов и сортировка. */
 export function QueueToolbar({
   query,
   className,
   showTypeFilter,
   onStatusChange,
   onSortChange,
-  onSearchChange,
   onTypeChange,
 }: QueueToolbarProps) {
   const activeStatus = query.status ?? "all";
@@ -98,13 +92,6 @@ export function QueueToolbar({
       onSortChange(value);
     },
     [onSortChange],
-  );
-
-  const handleSearchChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      onSearchChange(event.target.value);
-    },
-    [onSearchChange],
   );
 
   return (
@@ -143,18 +130,6 @@ export function QueueToolbar({
           options={SORT_OPTIONS}
           value={activeSort}
         />
-
-        <label className="relative block min-w-0 sm:w-[280px]">
-          <span className="sr-only">Поиск по задачам</span>
-          <Search className="pointer-events-none absolute left-5 top-1/2 size-5 -translate-y-1/2 text-[var(--c-fg-low)]" />
-          <Input
-            className="h-[62px] rounded-full border-[var(--c-line)] bg-[var(--c-bg-1)] pl-13 pr-5 text-[18px] text-[var(--c-fg)] placeholder:text-[var(--c-fg-low)] focus-visible:ring-[var(--c-accent)]"
-            onChange={handleSearchChange}
-            placeholder="Поиск"
-            type="search"
-            value={query.search ?? ""}
-          />
-        </label>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import {
   type GenType,
 } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
+import { TaskIcon } from "@/shared/ui/task-icon";
 
 import { formatCredits, formatEta } from "../lib/formatEta";
 import { ProgressBar } from "./ProgressBar";
@@ -58,14 +59,14 @@ export function TaskRow({
   return (
     <article
       className={cn(
-        "group grid min-h-[164px] grid-cols-[104px_minmax(0,1fr)_auto] items-center gap-7 rounded-[30px] border bg-[var(--c-bg)] px-7 py-6 transition-colors",
+        "group box-border flex h-[89px] w-full flex-none flex-row items-center gap-4 self-stretch rounded-[16px] border bg-[#141110] px-4 py-[14px] transition-colors",
         isRunning
-          ? "border-[rgba(232,84,32,0.65)] shadow-[0_0_0_1px_rgba(232,84,32,0.16)]"
-          : "border-[var(--c-line)] hover:border-[var(--c-line-2)]",
+          ? "border-[rgba(232,84,32,0.35)]"
+          : "border-[rgba(232,84,32,0.35)] hover:border-[rgba(232,84,32,0.5)]",
         className,
       )}
     >
-      <div className="flex size-[104px] items-center justify-center overflow-hidden rounded-[24px] bg-[var(--c-bg-1)] ring-1 ring-white/[0.03]">
+      <TaskIcon className="overflow-hidden text-[var(--c-accent-2)]">
         {task.previewUrl ? (
           <img
             alt=""
@@ -74,53 +75,49 @@ export function TaskRow({
             src={task.previewUrl}
           />
         ) : (
-          <div className="flex size-full items-center justify-center bg-[radial-gradient(circle_at_35%_30%,rgba(232,84,32,0.22),transparent_36%),linear-gradient(135deg,var(--c-bg-2),var(--c-bg))] text-[var(--c-accent-2)]">
-            <TypeIcon className="size-8" strokeWidth={2.3} />
-          </div>
+          <TypeIcon className="size-5" strokeWidth={2.3} />
         )}
-      </div>
+      </TaskIcon>
 
-      <div className="min-w-0 self-stretch">
-        <div className="flex h-full min-w-0 flex-col justify-between gap-5">
-          <div className="min-w-0">
-            <h3 className="truncate text-[27px] font-semibold leading-[1.15] text-[var(--c-fg)]">
-              {task.prompt}
-            </h3>
+      <div className="min-w-0 flex-[1_1_831px] self-stretch">
+        <div className="flex h-[61px] min-w-0 flex-col items-start gap-[7px]">
+          <h3 className="h-5 w-full flex-none truncate text-[15px] font-medium leading-5 text-[#F6EFE9]">
+            {task.prompt}
+          </h3>
 
-            <div className="mt-4 flex min-w-0 items-center gap-3 text-[22px] leading-none text-[var(--c-fg-mute)]">
-              <span className="flex min-w-0 items-center gap-3 rounded-full bg-[var(--c-bg-1)] px-4 py-2 font-mono text-[20px] ring-1 ring-white/[0.03]">
-                <span className="size-3 rounded-full bg-[var(--c-accent)]" />
-                <span className="truncate">
-                  {task.model.name}
-                  {task.model.version ? ` ${task.model.version}` : ""}
-                </span>
+          <div className="flex h-[22px] w-full flex-none items-center gap-2 text-[12px] leading-4">
+            <span className="flex h-[22px] w-[122px] flex-none items-center gap-1.5 rounded-full bg-[#1A1514] px-2 py-[3px] font-mono text-[12px] font-normal leading-4 text-[#C8BEB6]">
+              <span className="size-1.5 flex-none rounded-full bg-[#E85420]" />
+              <span className="truncate">
+                {task.model.name}
+                {task.model.version ? ` ${task.model.version}` : ""}
               </span>
-              <span className="text-[var(--c-fg-low)]">·</span>
-              <span className="truncate font-mono">
-                {metaItems.join(" · ")}
-              </span>
-            </div>
+            </span>
+            <span className="flex-none text-[12px] font-normal leading-4 text-[#5A504A]">
+              ·
+            </span>
+            <span className="truncate text-[12px] font-normal leading-4 text-[#8A7F78]">
+              {metaItems.join(" · ")}
+            </span>
           </div>
 
-          <div>
-            <ProgressBar
-              className="max-w-[1520px]"
-              isActive={isRunning}
-              value={task.progress}
-            />
-            {task.status === TASK_STATUS.failed && task.error && (
-              <p className="mt-2 truncate text-sm text-red-300">
-                {task.error.message}
-              </p>
-            )}
-          </div>
+          <ProgressBar
+            className="h-[5px] w-full flex-none bg-[#221C19]"
+            indicatorClassName={
+              isRunning
+                ? "bg-[linear-gradient(135deg,#E85421_0%,#FF7A3D_70.72%)] shadow-none"
+                : undefined
+            }
+            isActive={isRunning}
+            value={task.progress}
+          />
         </div>
       </div>
 
-      <div className="flex items-center gap-5 self-start pt-4">
+      <div className="flex h-[32px] w-[169px] flex-none items-center gap-3 whitespace-nowrap">
         <span
           className={cn(
-            "min-w-16 text-right font-mono text-[22px] font-semibold tabular-nums",
+            "w-6 flex-none text-right font-mono text-[13px] font-medium leading-[17px] tabular-nums",
             isRunning ? "text-[var(--c-accent-2)]" : "text-[var(--c-fg-mute)]",
           )}
         >
@@ -134,6 +131,7 @@ export function TaskRow({
           onRetry={onRetry}
           status={task.status}
           taskId={task.id}
+          variant="taskRow"
         />
       </div>
     </article>

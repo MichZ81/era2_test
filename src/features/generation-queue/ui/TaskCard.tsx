@@ -112,7 +112,7 @@ export function TaskCard({
 
       <div className="mt-6 flex items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-4">
-          <StatusBadge className="h-[52px] min-w-[102px]" status={task.status} />
+          <StatusBadge status={task.status} />
           <span
             className={cn(
               "font-mono text-[24px] font-semibold tabular-nums",

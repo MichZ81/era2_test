@@ -30,7 +30,7 @@ export function GenerationQueueContent() {
     state.loadStatus === "ready" && tasks.length > 0 && visibleTasks.length === 0;
 
   return (
-    <section className="min-h-[calc(100vh-var(--header-height,64px))] bg-[var(--c-bg)] px-4 py-8 text-[var(--c-fg)] sm:px-8 lg:px-0 lg:py-12">
+    <section className="min-h-[calc(100vh-var(--header-height,64px))] bg-[var(--c-bg)] px-4 py-8 text-[var(--c-fg)] sm:px-6 md:px-8 lg:px-10 xl:px-12 lg:py-12">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col gap-8">
         <header className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -68,7 +68,6 @@ export function GenerationQueueContent() {
             />
 
             <QueueToolbar
-              onSearchChange={view.setSearch}
               onSortChange={view.setSort}
               onStatusChange={view.setStatusFilter}
               onTypeChange={view.setTypeFilter}
@@ -94,7 +93,7 @@ export function GenerationQueueContent() {
                         task={task}
                       />
                       <TaskRow
-                        className={cn("hidden md:grid")}
+                        className={cn("hidden md:flex")}
                         onCancel={actions.cancelTask}
                         onDelete={actions.deleteTask}
                         onDownload={handleDownload}

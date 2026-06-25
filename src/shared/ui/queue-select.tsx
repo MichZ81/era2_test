@@ -41,7 +41,7 @@ export function QueueSelect<TValue extends string>({
     <Select onValueChange={onValueChange} value={value}>
       <SelectTrigger
         aria-label={label}
-        className="h-[62px] w-full min-w-[248px] rounded-full border-[var(--c-line)] bg-[var(--c-bg-1)] px-7 text-[22px] font-semibold text-[var(--c-fg-mute)] shadow-none hover:border-[var(--c-line-2)] hover:text-[var(--c-fg)] focus:ring-[var(--c-accent)] sm:w-auto [&>svg]:hidden"
+        className="h-[34px] w-full min-w-[248px] rounded-full border-[var(--c-line)] bg-[var(--c-bg-1)] px-7 text-[13px] font-semibold text-[var(--c-fg-mute)] shadow-none hover:border-[var(--c-line-2)] hover:text-[var(--c-fg)] focus:ring-[var(--c-accent)] sm:w-auto [&>svg]:hidden"
       >
         <SelectValue />
         <ChevronDown className="ml-3 size-4 text-[var(--c-fg-low)]" />
@@ -49,7 +49,7 @@ export function QueueSelect<TValue extends string>({
       <SelectContent className="rounded-[18px] border-[var(--c-line)] bg-[var(--c-bg-1)] text-[var(--c-fg)]">
         {options.map((option) => (
           <SelectItem
-            className="rounded-xl px-4 py-3 text-base focus:bg-[var(--c-accent-soft)] focus:text-[var(--c-fg)]"
+            className="rounded-xl px-4 py-3 text-[13px] focus:bg-[var(--c-accent-soft)] focus:text-[var(--c-fg)]"
             key={option.value}
             value={option.value}
           >

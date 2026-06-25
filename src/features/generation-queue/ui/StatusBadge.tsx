@@ -11,24 +11,23 @@ const STATUS_VIEW: Record<
 > = {
   [TASK_STATUS.queued]: {
     label: "В очереди",
-    className: "bg-white/5 text-[var(--c-fg-mute)] ring-white/10",
+    className: "text-[var(--c-fg-mute)]",
   },
   [TASK_STATUS.running]: {
     label: "Идет",
-    className:
-      "bg-[rgba(232,84,32,0.22)] text-[var(--c-accent-2)] ring-[rgba(232,84,32,0.18)]",
+    className: "text-[var(--c-accent-2)]",
   },
   [TASK_STATUS.done]: {
     label: "Готово",
-    className: "bg-emerald-500/15 text-emerald-300 ring-emerald-500/20",
+    className: "text-emerald-300",
   },
   [TASK_STATUS.failed]: {
     label: "Ошибка",
-    className: "bg-red-500/15 text-red-300 ring-red-500/20",
+    className: "text-red-300",
   },
   [TASK_STATUS.canceled]: {
     label: "Отменено",
-    className: "bg-white/[0.03] text-[var(--c-fg-low)] ring-white/10",
+    className: "text-[var(--c-fg-low)]",
   },
 };
 
@@ -47,7 +46,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex h-12 min-w-[94px] items-center justify-center rounded-[14px] px-4 text-[16px] font-semibold ring-1",
+        "order-1 box-border inline-flex h-[26px] w-[51px] flex-none flex-row items-center justify-center overflow-hidden whitespace-nowrap rounded-[8px] bg-[#3A1A0A] px-[10px] py-[5px] text-[12px] font-medium leading-4",
         view.className,
         className,
       )}

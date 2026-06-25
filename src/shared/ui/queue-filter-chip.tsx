@@ -33,7 +33,7 @@ export function QueueFilterChip<TValue extends string = string>({
       active={active}
       aria-pressed={active}
       className={cn(
-        "h-[62px] shrink-0 px-7 text-[22px] font-semibold",
+        "h-[34px] shrink-0 px-7 text-[13px] font-semibold",
         active
           ? "border-[var(--c-accent)] bg-[var(--c-accent)] text-white shadow-[0_12px_32px_-16px_rgba(232,84,32,0.75)]"
           : "border-[var(--c-line)] bg-[var(--c-bg-1)] text-[var(--c-fg-mute)] hover:border-[var(--c-line-2)] hover:text-[var(--c-fg)]",
