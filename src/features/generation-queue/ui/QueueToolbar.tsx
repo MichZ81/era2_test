@@ -98,11 +98,11 @@ export function QueueToolbar({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 md:h-[34px] md:w-full md:flex-row md:items-center md:gap-3 lg:justify-start",
+        "no-scrollbar -mx-4 flex h-[34px] w-[calc(100%+32px)] flex-row items-center gap-3 overflow-x-auto px-4 md:mx-0 md:w-full md:flex-none md:overflow-visible md:px-0 lg:justify-start",
         className,
       )}
     >
-      <div className="no-scrollbar -mx-1 flex items-start gap-2 overflow-x-auto px-1 md:mx-0 md:h-[34px] md:w-[392px] md:flex-none md:overflow-visible md:px-0">
+      <div className="flex h-[34px] w-[392px] flex-none items-start gap-2">
         {STATUS_FILTERS.map((filter) => (
           <QueueFilterChip
             active={activeStatus === filter.value}
@@ -118,10 +118,10 @@ export function QueueToolbar({
 
       <span
         aria-hidden="true"
-        className="hidden h-px w-[10px] flex-none md:block"
+        className="h-px w-[10px] flex-none"
       />
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center md:h-[34px] md:flex-none">
+      <div className="flex h-[34px] flex-none flex-row items-center gap-3">
         {showTypeFilter && (
           <QueueSelect
             label="Тип"
@@ -132,7 +132,7 @@ export function QueueToolbar({
         )}
 
         <QueueSelect
-          className="md:w-[135px] md:min-w-[135px] lg:w-[135px] lg:min-w-[135px] [&>span:first-child]:w-[98px]"
+          className="w-[135px] min-w-[135px] [&>span:first-child]:w-[98px]"
           label="Сортировка"
           onValueChange={handleSortChange}
           options={SORT_OPTIONS}

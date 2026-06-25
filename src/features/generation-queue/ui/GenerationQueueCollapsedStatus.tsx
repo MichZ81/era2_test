@@ -1,9 +1,6 @@
-import { Loader2 } from "lucide-react";
-
 import { cn } from "@/shared/lib/utils";
 
 import { pluralizeGenerationCount } from "../lib/formatGenerationTaskLabel";
-import { ProgressBar } from "./ProgressBar";
 
 export interface GenerationQueueCollapsedStatusProps {
   /** Общее количество queued + running задач. */
@@ -26,24 +23,17 @@ export function GenerationQueueCollapsedStatus({
     <button
       aria-label="Развернуть статус генераций"
       className={cn(
-        "ml-auto flex w-full items-center gap-3 rounded-full border border-[var(--c-line)] bg-[var(--c-bg-1)] px-4 py-3 text-left text-[var(--c-fg)] shadow-[0_18px_70px_rgba(0,0,0,0.42)] backdrop-blur-xl transition-transform hover:-translate-y-0.5 hover:border-[var(--c-line-2)] sm:w-auto sm:min-w-[260px]",
+        "ml-auto box-border flex h-[37px] w-[180px] flex-none flex-row items-center gap-2 rounded-full border border-[rgba(232,84,32,0.4)] bg-[#1A1614] py-[10px] pl-[14px] pr-4 text-left shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-transform hover:-translate-y-0.5",
       )}
       onClick={onExpand}
       type="button"
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--c-accent-soft)] text-[var(--c-accent-2)]">
-        <Loader2 className="size-4 animate-spin" />
+      <span className="box-border size-4 flex-none rounded-full border-2 border-[#E85420]" />
+      <span className="h-[17px] flex-none whitespace-nowrap text-[13px] font-medium leading-[17px] text-[#F6EFE9]">
+        {totalActive} {pluralizeGenerationCount(totalActive)}
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold">
-          {totalActive} {pluralizeGenerationCount(totalActive)} ·{" "}
-          {averageProgress}%
-        </span>
-        <ProgressBar
-          className="mt-2 h-1"
-          isActive
-          value={averageProgress}
-        />
+      <span className="h-[17px] flex-none whitespace-nowrap font-mono text-[13px] font-medium leading-[17px] text-[#FF7A3D]">
+        · {averageProgress}%
       </span>
     </button>
   );
