@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Bell, Sparkles, Gift, Zap, Info, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 interface Notification {
   id: string;

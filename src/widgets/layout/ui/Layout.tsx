@@ -5,7 +5,7 @@ import { Header, Sidebar } from "@/widgets/navigation";
 import { CommandPaletteProvider } from "@/features/command-palette";
 import { useAuth } from "@/features/auth";
 import { useTheme } from "@/features/theme-switcher";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 const sidebarPages = ["/text", "/design", "/video", "/audio", "/agents", "/toolkit", "/history", "/pricing", "/create"];
 const workspacePages = ["/text", "/design", "/video", "/audio", "/create"];

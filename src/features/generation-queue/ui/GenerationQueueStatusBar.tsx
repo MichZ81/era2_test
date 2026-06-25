@@ -4,7 +4,7 @@ import {
   TASK_STATUS,
   type GenerationTask,
 } from "@/entities/generation-task";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 import { useQueue } from "../model/useQueue";
 import { GenerationQueueCollapsedStatus } from "./GenerationQueueCollapsedStatus";

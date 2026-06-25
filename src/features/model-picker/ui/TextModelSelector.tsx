@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { Search, Check, ChevronRight } from "lucide-react";
 import { textProviders, type TextProvider, type TextSubModel } from "@/entities/ai-model";
 import { ModelIcon } from "./ModelIcon";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 interface Props {
   open: boolean;

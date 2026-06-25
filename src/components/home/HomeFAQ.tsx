@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 const faqItems = [
   { q: "Можно ли попробовать бесплатно?", a: "Да. При регистрации вы получаете бесплатные кредиты для тестирования всех нейросетей. Карта не требуется." },

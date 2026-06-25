@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Search, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import { getModelsByCategory, type AIModel, type SubModel } from "@/entities/ai-model";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 interface Props {
   open: boolean;

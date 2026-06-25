@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { aiPhotos, aiArt, aiVideo, aiLandscapes } from "@/entities/generation";
 
 const allImages = [...aiPhotos.slice(0, 3), ...aiArt.slice(0, 2), ...aiLandscapes.slice(0, 2), ...aiVideo.slice(0, 3), ...aiPhotos.slice(3, 5), ...aiArt.slice(2, 4)];

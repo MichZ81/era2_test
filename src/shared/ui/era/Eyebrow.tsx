@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib/cn"
 
 export interface EyebrowProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode

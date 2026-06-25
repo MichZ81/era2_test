@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@/shared/routing";
 import { MessageSquare, Image as ImageIcon, Video, AudioLines } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 type TabId = "text" | "image" | "video" | "audio";
 

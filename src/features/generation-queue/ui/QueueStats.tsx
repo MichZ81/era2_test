@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { MetricCard } from "@/shared/ui/metric-card";
 
 import type { QueueStats as QueueStatsModel } from "../model/selectors";

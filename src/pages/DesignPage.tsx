@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Camera, Palette, Sparkles, Image as ImageIcon, Zap, Paintbrush, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 import { PromptBlock } from "@/components/workspace/ImagePromptBlock";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "@/shared/routing";
 import { motion } from "framer-motion";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { aiPhotos, aiVideo } from "@/entities/generation";
 
 const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } };

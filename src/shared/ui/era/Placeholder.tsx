@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib/cn"
 
 type Tone = "rust" | "coal" | "ember"
 type Aspect = "1/1" | "4/3" | "16/9" | "16/10" | "3/4" | "5/4"

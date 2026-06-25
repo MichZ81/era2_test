@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ChevronDown } from "lucide-react"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib/cn"
 
 /**
  * ERA2 SegmentedToolbar — single capsule bar with internal dividers.

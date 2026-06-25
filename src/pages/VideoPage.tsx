@@ -3,7 +3,7 @@ import { flushSync } from "react-dom";
 import { Zap, Sparkles, Square, Clock, Monitor, Film, Music, User, Clapperboard, Smartphone, Heart, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { AttachmentButton } from "@/shared/ui/era";
 import { InlinePillDropdown } from "@/features/model-picker";
 

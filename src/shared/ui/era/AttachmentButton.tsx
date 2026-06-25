@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Plus } from "lucide-react"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib/cn"
 
 export interface AttachmentButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

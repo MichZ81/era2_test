@@ -2,7 +2,7 @@ import { useCallback, type ChangeEvent } from "react";
 import { Search } from "lucide-react";
 
 import { TASK_STATUS } from "@/entities/generation-task";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { Input } from "@/shared/ui/input";
 import { QueueFilterChip } from "@/shared/ui/queue-filter-chip";
 import { QueueSelect } from "@/shared/ui/queue-select";

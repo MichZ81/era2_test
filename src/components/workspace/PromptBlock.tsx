@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Zap, Sparkles, Square, Gem, Clock, Monitor, Video, Mic, Palette } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { SegmentedToolbar, SegmentedItem, AttachmentButton } from "@/shared/ui/era";
 
 interface ModelOption {

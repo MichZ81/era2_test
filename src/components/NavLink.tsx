@@ -1,6 +1,6 @@
 import { Link } from "@/shared/routing";
 import { forwardRef } from "react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 type NavLinkCompatProps = Omit<React.ComponentProps<typeof Link>, "activeProps"> & {
   activeClassName?: string;

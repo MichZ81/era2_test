@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useCopyToast } from "@/features/copy-toast";
 import { StatusBadge } from "@/shared/ui/era/StatusBadge";
 import { getHistoryItems } from "@/entities/history";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { ReferralPopup } from "@/features/promo";
 
 interface RecentChat {

@@ -10,7 +10,7 @@ import {
   useQueue,
 } from "@/features/generation-queue";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 
 /** Внутренняя композиция экрана очереди, которая читает данные из QueueProvider. */

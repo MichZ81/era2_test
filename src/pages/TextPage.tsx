@@ -4,7 +4,7 @@ import { textProviders, textQuickActions } from "@/entities/ai-model";
 import { TextModelSelector } from "@/features/model-picker";
 import { ModelIcon } from "@/features/model-picker";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { useTheme } from "@/features/theme-switcher";
 
 import { ModelCarousel, type CarouselModel } from "@/components/workspace/ModelCarousel";

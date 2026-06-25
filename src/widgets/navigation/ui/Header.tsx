@@ -1,6 +1,6 @@
 import { Link } from "@/shared/routing";
 import { Clock, Menu, Moon, Search, Sun } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { useTheme } from "@/features/theme-switcher";
 import { useAuth } from "@/features/auth";
 import { useCommandPalette } from "@/features/command-palette";

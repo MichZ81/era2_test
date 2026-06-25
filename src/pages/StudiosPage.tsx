@@ -26,7 +26,7 @@ import {
   AudioLines,
   type LucideIcon,
 } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
 import { textProviders } from "@/entities/ai-model";
 import { imageProviders } from "@/entities/ai-model";

@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { StatusBadge } from "@/shared/ui/era";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
 import type { SearchableModel } from "@/config/searchableModels";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 // rough seconds-to-render estimate per type (декоративно)
 const approxSeconds: Record<SearchableModel["type"], number> = {

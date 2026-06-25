@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 export interface TaskIconProps {
   /** Иконка или превью внутри thumb-контейнера. */

@@ -5,7 +5,7 @@ import {
   RectangleHorizontal, Clock, Monitor, Disc,
   MessageSquare, Image as ImageTab, Video as VideoTab, AudioLines,
 } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { ModelPickerPill, type PickerProvider } from "@/features/model-picker";
 import { imageProviders } from "@/entities/ai-model";
 import { videoProviders } from "@/entities/ai-model";

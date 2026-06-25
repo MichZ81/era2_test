@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Check, ChevronDown, Users, Copy } from "lucide-react";
 import { useCopyToast } from "@/features/copy-toast";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { Footer } from "@/components/shared/Footer";
 import { motion } from "framer-motion";
 

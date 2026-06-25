@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "@/shared/routing";
 import { motion } from "framer-motion";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 const tabs = ["Все", "Образование", "Контент", "Маркетинг", "Бизнес", "Разработка", "Здоровье", "Лайфстайл"];
 

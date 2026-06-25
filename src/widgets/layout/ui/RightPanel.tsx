@@ -3,7 +3,7 @@ import { useLocation } from "@/shared/routing";
 import { Settings2, X, ChevronUp, ChevronDown, RotateCcw, Film, Image as ImageIcon, Clock, Palette } from "lucide-react";
 import { getModelsByCategory, type AIModel } from "@/entities/ai-model";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 interface RightPanelProps {
   open: boolean;

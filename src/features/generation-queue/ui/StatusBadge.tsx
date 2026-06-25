@@ -1,5 +1,5 @@
 import { TASK_STATUS, type TaskStatus } from "@/entities/generation-task";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 
 /** Визуальная конфигурация статусов из ТЗ: neutral/orange/green/red/muted. */
 const STATUS_VIEW: Record<

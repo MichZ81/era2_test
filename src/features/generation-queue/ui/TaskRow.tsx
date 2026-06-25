@@ -7,7 +7,7 @@ import {
   type GenType,
   type TaskStatus,
 } from "@/entities/generation-task";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { TaskIcon } from "@/shared/ui/task-icon";
 
 import { formatCredits, formatTaskTime } from "../lib/formatEta";

@@ -5,7 +5,7 @@ import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
 import { getToolPageData } from "@/entities/tool";
 import { FAQ, toolPageItems } from "@/components/shared/FAQ";
 import { Footer } from "@/components/shared/Footer";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { motion } from "framer-motion";
 
 const imageTools: { Icon: LucideIcon; label: string }[] = [

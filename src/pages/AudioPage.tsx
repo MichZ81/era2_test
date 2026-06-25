@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, Play, Plus, Zap, Settings2, Smartphone, Film, Mic, Megaphone, Headphones, Globe, Music, Volume2, Languages, AudioLines, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { PillDropdown } from "@/features/model-picker";
 import { ModelGlyph } from "@/shared/ui/era/ModelGlyph";
 import { WelcomeBlock, type WelcomeScenario } from "@/components/workspace/WelcomeBlock";

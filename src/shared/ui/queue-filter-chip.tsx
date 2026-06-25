@@ -1,6 +1,6 @@
 import { useCallback, type ReactNode } from "react";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/cn";
 import { Chip } from "@/shared/ui/era";
 
 export interface QueueFilterChipProps<TValue extends string = string> {
