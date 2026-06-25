@@ -118,15 +118,12 @@ export function TaskRow({
         </div>
       </div>
 
-      <div className="flex h-[32px] w-[200px] flex-none items-center gap-3 whitespace-nowrap">
-        <span
-          className={cn(
-            "w-6 flex-none text-right font-mono text-[13px] font-medium leading-[17px] tabular-nums",
-            isRunning ? "text-[var(--c-accent-2)]" : "text-[var(--c-fg-mute)]",
-          )}
-        >
-          {progressLabel}
-        </span>
+      <div className="ml-auto flex h-[32px] w-[200px] flex-none items-center justify-end gap-3 whitespace-nowrap">
+        {isRunning && (
+          <span className="w-6 flex-none text-right font-mono text-[13px] font-medium leading-[17px] tabular-nums text-[var(--c-accent-2)]">
+            {progressLabel}
+          </span>
+        )}
         <StatusBadge
           className={getTaskRowStatusClassName(task.status)}
           status={task.status}
