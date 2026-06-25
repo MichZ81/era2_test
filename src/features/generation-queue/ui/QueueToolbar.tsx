@@ -1,7 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, type ChangeEvent } from "react";
+import { Search } from "lucide-react";
 
 import { TASK_STATUS } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
+import { Input } from "@/shared/ui/input";
 import { QueueFilterChip } from "@/shared/ui/queue-filter-chip";
 import { QueueSelect } from "@/shared/ui/queue-select";
 
@@ -24,6 +26,9 @@ export interface QueueToolbarProps {
 
   /** Вызывается при выборе статуса. */
   onStatusChange: (status: QueueStatusFilter) => void;
+
+  /** Вызывается при изменении поисковой строки. */
+  onSearchChange: (search: string) => void;
 
   /** Вызывается при выборе сортировки. */
   onSortChange: (sort: QueueSort) => void;
@@ -74,10 +79,12 @@ export function QueueToolbar({
   className,
   showTypeFilter,
   onStatusChange,
+  onSearchChange,
   onSortChange,
   onTypeChange,
 }: QueueToolbarProps) {
   const activeStatus = query.status ?? "all";
+  const activeSearch = query.search ?? "";
   const activeSort = query.sort ?? "newest";
   const activeType = query.type ?? "all";
 
@@ -86,6 +93,13 @@ export function QueueToolbar({
       onTypeChange?.(value);
     },
     [onTypeChange],
+  );
+
+  const handleSearchChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      onSearchChange(event.target.value);
+    },
+    [onSearchChange],
   );
 
   const handleSortChange = useCallback(
@@ -120,6 +134,21 @@ export function QueueToolbar({
         aria-hidden="true"
         className="h-px w-[10px] flex-none"
       />
+
+      <label className="relative h-[34px] w-[220px] min-w-[220px] flex-none">
+        <span className="sr-only">Поиск по очереди</span>
+        <Search
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[14px] top-1/2 size-3.5 -translate-y-1/2 text-[#8A7F78]"
+        />
+        <Input
+          className="h-[34px] rounded-full border-[#2D2420] bg-[#1A1514] pl-9 pr-[14px] text-[13px] leading-[17px] text-[#C8BEB6] shadow-none placeholder:text-[#8A7F78] focus-visible:ring-[#E85420]"
+          onChange={handleSearchChange}
+          placeholder="Поиск"
+          type="search"
+          value={activeSearch}
+        />
+      </label>
 
       <div className="flex h-[34px] flex-none flex-row items-center gap-3">
         {showTypeFilter && (

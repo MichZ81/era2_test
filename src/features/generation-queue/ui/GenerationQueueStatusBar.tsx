@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   TASK_STATUS,
   type GenerationTask,
-  type TaskStatus,
 } from "@/entities/generation-task";
 import { cn } from "@/shared/lib/utils";
 
@@ -14,12 +13,12 @@ import { GenerationQueueSingleStatus } from "./GenerationQueueSingleStatus";
 
 /** Глобальный статус-бар активных генераций поверх любого экрана. */
 export function GenerationQueueStatusBar() {
-  const { activeTasks, stats, state, tasks } = useQueue();
+  const { activeTasks, stats, state } = useQueue();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isReady = state.loadStatus === "ready";
   const previewTasks = useMemo(
-    () => getPreviewTasks(tasks),
-    [tasks],
+    () => getPreviewTasks(activeTasks),
+    [activeTasks],
   );
   const handleCollapse = useCallback(() => {
     setIsCollapsed(true);
@@ -29,12 +28,12 @@ export function GenerationQueueStatusBar() {
   }, []);
 
   useEffect(() => {
-    if (tasks.length === 0) {
+    if (activeTasks.length === 0) {
       setIsCollapsed(false);
     }
-  }, [tasks.length]);
+  }, [activeTasks.length]);
 
-  if (!isReady || tasks.length === 0) {
+  if (!isReady || activeTasks.length === 0) {
     return null;
   }
 
@@ -53,7 +52,7 @@ export function GenerationQueueStatusBar() {
           onExpand={handleExpand}
           totalActive={activeTasks.length}
         />
-      ) : tasks.length === 1 && activeTasks.length === 1 ? (
+      ) : activeTasks.length === 1 ? (
         <GenerationQueueSingleStatus
           onCollapse={handleCollapse}
           task={activeTasks[0]}
@@ -77,22 +76,17 @@ function getPreviewTasks(tasks: readonly GenerationTask[]) {
     .slice(0, 3);
 }
 
-/** Сортирует задачи для мини-списка статус-бара: активные выше истории. */
+/** Сортирует активные задачи для мини-списка статус-бара. */
 function compareStatusBarTasks(left: GenerationTask, right: GenerationTask) {
-  const statusDiff = STATUS_BAR_STATUS_ORDER[left.status] -
-    STATUS_BAR_STATUS_ORDER[right.status];
+  const statusDiff = getActiveStatusOrder(left) - getActiveStatusOrder(right);
 
   if (statusDiff !== 0) {
     return statusDiff;
   }
 
-  return new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime();
+  return new Date(left.createdAt).getTime() - new Date(right.createdAt).getTime();
 }
 
-const STATUS_BAR_STATUS_ORDER: Record<TaskStatus, number> = {
-  [TASK_STATUS.running]: 0,
-  [TASK_STATUS.queued]: 1,
-  [TASK_STATUS.failed]: 2,
-  [TASK_STATUS.done]: 3,
-  [TASK_STATUS.canceled]: 4,
-};
+function getActiveStatusOrder(task: GenerationTask) {
+  return task.status === TASK_STATUS.running ? 0 : 1;
+}

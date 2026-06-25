@@ -93,6 +93,7 @@ export function QueueProvider({ children }: QueueProviderProps) {
       const restoredTasks = readStoredTasks();
 
       if (restoredTasks) {
+        /** Решение по восстановлению: running-задачи остаются running, а engine подхватывает их и продолжает тики после restore. */
         dispatch({
           type: "queue/tasksRestored",
           payload: {

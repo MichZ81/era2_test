@@ -68,6 +68,7 @@ export function GenerationQueueContent() {
             />
 
             <QueueToolbar
+              onSearchChange={view.setSearch}
               onSortChange={view.setSort}
               onStatusChange={view.setStatusFilter}
               onTypeChange={view.setTypeFilter}
