@@ -11,8 +11,7 @@ import { cn } from "@/shared/lib/utils";
 import { TaskIcon } from "@/shared/ui/task-icon";
 
 import { formatCredits } from "../lib/formatEta";
-import { formatTaskTime, isTaskTimeLive } from "../lib/formatTaskTime";
-import { useCurrentTime } from "../lib/useCurrentTime";
+import { formatTaskTime } from "../lib/formatTaskTime";
 import { ProgressBar } from "./ProgressBar";
 import { StatusBadge } from "./StatusBadge";
 import { TaskActions } from "./TaskActions";
@@ -52,13 +51,8 @@ export function TaskRow({
 }: TaskRowProps) {
   const TypeIcon = TYPE_ICON[task.type];
   const isRunning = task.status === TASK_STATUS.running;
-  const nowMs = useCurrentTime(isTaskTimeLive(task.status));
   const progressLabel = `${Math.round(task.progress)}%`;
-  const metaItems = [
-    formatTaskTime(task, nowMs),
-    formatCredits(task.credits),
-    queuePosition ? `#${queuePosition} в очереди` : null,
-  ].filter(Boolean);
+  const metaItems = getTaskMetaItems(task, queuePosition);
 
   return (
     <article
@@ -105,28 +99,25 @@ export function TaskRow({
             </span>
           </div>
 
-          <ProgressBar
-            className="h-[5px] w-full flex-none bg-[#221C19]"
-            indicatorClassName={
-              isRunning
-                ? "bg-[linear-gradient(135deg,#E85421_0%,#FF7A3D_70.72%)] shadow-none"
-                : undefined
-            }
-            isActive={isRunning}
-            value={task.progress}
-          />
+          {isRunning ? (
+            <ProgressBar
+              className="h-[5px] w-full flex-none bg-[#221C19]"
+              indicatorClassName="bg-[linear-gradient(135deg,#E85421_0%,#FF7A3D_70.72%)] shadow-none"
+              isActive
+              value={task.progress}
+            />
+          ) : (
+            <div className="h-[5px] w-full flex-none" aria-hidden="true" />
+          )}
         </div>
       </div>
 
-      <div className="flex h-[32px] w-[200px] flex-none items-center gap-3 whitespace-nowrap">
-        <span
-          className={cn(
-            "w-6 flex-none text-right font-mono text-[13px] font-medium leading-[17px] tabular-nums",
-            isRunning ? "text-[var(--c-accent-2)]" : "text-[var(--c-fg-mute)]",
-          )}
-        >
-          {progressLabel}
-        </span>
+      <div className="ml-auto flex h-[32px] w-[200px] flex-none items-center justify-end gap-3 whitespace-nowrap">
+        {isRunning && (
+          <span className="w-6 flex-none text-right font-mono text-[13px] font-medium leading-[17px] tabular-nums text-[var(--c-accent-2)]">
+            {progressLabel}
+          </span>
+        )}
         <StatusBadge
           className={getTaskRowStatusClassName(task.status)}
           status={task.status}
@@ -159,8 +150,41 @@ function getTaskRowStatusClassName(status: TaskStatus) {
   }
 
   if (status === TASK_STATUS.canceled) {
-    return "w-[86px]";
+    return "w-[79px] bg-[#1A1514]";
   }
 
   return undefined;
+}
+
+function getTaskMetaItems(
+  task: GenerationTask,
+  queuePosition?: number | null,
+) {
+  if (task.status === TASK_STATUS.queued) {
+    return [
+      queuePosition ? `позиция ${queuePosition} в очереди` : "в очереди",
+      formatCredits(task.credits),
+    ];
+  }
+
+  if (task.status === TASK_STATUS.canceled) {
+    return ["отменено пользователем"];
+  }
+
+  if (task.status === TASK_STATUS.failed) {
+    return [formatErrorMessage(task.error?.message)];
+  }
+
+  if (task.status === TASK_STATUS.done) {
+    return [`готово за ${formatTaskTime(task)}`, formatCredits(task.credits)];
+  }
+
+  return [formatTaskTime(task), formatCredits(task.credits)];
+}
+
+function formatErrorMessage(message?: string) {
+  const fallback = "ошибка генерации";
+  const value = message?.trim() || fallback;
+
+  return value.charAt(0).toLocaleLowerCase("ru-RU") + value.slice(1);
 }

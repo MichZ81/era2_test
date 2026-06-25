@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import {
   Download,
   MoreHorizontal,
-  RotateCcw,
+  RotateCw,
   Trash2,
   X,
 } from "lucide-react";
@@ -70,6 +70,7 @@ export function TaskActions({
       }`
     : "h-14 w-14 rounded-[14px]";
   const iconClassName = isCompactVariant ? "size-3.5" : "size-5";
+  const retryIconClassName = `${iconClassName} -rotate-90`;
   const largeIconClassName = isCompactVariant ? "size-3.5" : "size-6";
   const handleCancel = useCallback(() => {
     onCancel?.(taskId);
@@ -119,7 +120,7 @@ export function TaskActions({
           type="button"
           variant="outline"
         >
-          <RotateCcw className={iconClassName} />
+          <RotateCw className={retryIconClassName} />
         </Button>
       )}
 

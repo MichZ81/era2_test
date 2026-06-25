@@ -6,9 +6,12 @@ import {
 
 import { formatEta } from "./formatEta";
 
-export function formatTaskTime(task: GenerationTask, nowMs: number) {
-  if (task.status === TASK_STATUS.running && task.startedAt) {
-    return formatElapsedTime(getElapsedSeconds(task.startedAt, nowMs));
+export function formatTaskTime(task: GenerationTask) {
+  if (
+    task.status === TASK_STATUS.running ||
+    task.status === TASK_STATUS.queued
+  ) {
+    return formatEta(task.estimatedDurationSec);
   }
 
   if (isFinishedStatus(task.status) && task.startedAt && task.finishedAt) {
@@ -18,20 +21,12 @@ export function formatTaskTime(task: GenerationTask, nowMs: number) {
   return formatEta(task.estimatedDurationSec);
 }
 
-export function isTaskTimeLive(status: TaskStatus) {
-  return status === TASK_STATUS.running;
-}
-
 function isFinishedStatus(status: TaskStatus) {
   return (
     status === TASK_STATUS.done ||
     status === TASK_STATUS.failed ||
     status === TASK_STATUS.canceled
   );
-}
-
-function getElapsedSeconds(startedAt: string, nowMs: number) {
-  return Math.max(0, Math.floor((nowMs - new Date(startedAt).getTime()) / 1000));
 }
 
 function getDurationSeconds(startedAt: string, finishedAt: string) {
