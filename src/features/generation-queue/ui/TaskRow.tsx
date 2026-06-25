@@ -11,8 +11,7 @@ import { cn } from "@/shared/lib/utils";
 import { TaskIcon } from "@/shared/ui/task-icon";
 
 import { formatCredits } from "../lib/formatEta";
-import { formatTaskTime, isTaskTimeLive } from "../lib/formatTaskTime";
-import { useCurrentTime } from "../lib/useCurrentTime";
+import { formatTaskTime } from "../lib/formatTaskTime";
 import { ProgressBar } from "./ProgressBar";
 import { StatusBadge } from "./StatusBadge";
 import { TaskActions } from "./TaskActions";
@@ -52,13 +51,8 @@ export function TaskRow({
 }: TaskRowProps) {
   const TypeIcon = TYPE_ICON[task.type];
   const isRunning = task.status === TASK_STATUS.running;
-  const nowMs = useCurrentTime(isTaskTimeLive(task.status));
   const progressLabel = `${Math.round(task.progress)}%`;
-  const metaItems = [
-    formatTaskTime(task, nowMs),
-    formatCredits(task.credits),
-    queuePosition ? `#${queuePosition} в очереди` : null,
-  ].filter(Boolean);
+  const metaItems = getTaskMetaItems(task, queuePosition);
 
   return (
     <article
@@ -156,8 +150,41 @@ function getTaskRowStatusClassName(status: TaskStatus) {
   }
 
   if (status === TASK_STATUS.canceled) {
-    return "w-[86px]";
+    return "w-[79px] bg-[#1A1514]";
   }
 
   return undefined;
+}
+
+function getTaskMetaItems(
+  task: GenerationTask,
+  queuePosition?: number | null,
+) {
+  if (task.status === TASK_STATUS.queued) {
+    return [
+      queuePosition ? `позиция ${queuePosition} в очереди` : "в очереди",
+      formatCredits(task.credits),
+    ];
+  }
+
+  if (task.status === TASK_STATUS.canceled) {
+    return ["отменено пользователем"];
+  }
+
+  if (task.status === TASK_STATUS.failed) {
+    return [formatErrorMessage(task.error?.message)];
+  }
+
+  if (task.status === TASK_STATUS.done) {
+    return [`готово за ${formatTaskTime(task)}`, formatCredits(task.credits)];
+  }
+
+  return [formatTaskTime(task), formatCredits(task.credits)];
+}
+
+function formatErrorMessage(message?: string) {
+  const fallback = "ошибка генерации";
+  const value = message?.trim() || fallback;
+
+  return value.charAt(0).toLocaleLowerCase("ru-RU") + value.slice(1);
 }
