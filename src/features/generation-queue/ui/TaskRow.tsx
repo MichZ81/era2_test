@@ -105,16 +105,16 @@ export function TaskRow({
             </span>
           </div>
 
-          <ProgressBar
-            className="h-[5px] w-full flex-none bg-[#221C19]"
-            indicatorClassName={
-              isRunning
-                ? "bg-[linear-gradient(135deg,#E85421_0%,#FF7A3D_70.72%)] shadow-none"
-                : undefined
-            }
-            isActive={isRunning}
-            value={task.progress}
-          />
+          {isRunning ? (
+            <ProgressBar
+              className="h-[5px] w-full flex-none bg-[#221C19]"
+              indicatorClassName="bg-[linear-gradient(135deg,#E85421_0%,#FF7A3D_70.72%)] shadow-none"
+              isActive
+              value={task.progress}
+            />
+          ) : (
+            <div className="h-[5px] w-full flex-none" aria-hidden="true" />
+          )}
         </div>
       </div>
 
