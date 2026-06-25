@@ -36,12 +36,13 @@ export interface QueueToolbarProps {
 const STATUS_FILTERS: Array<{
   value: QueueStatusFilter;
   label: string;
+  className: string;
 }> = [
-  { value: "all", label: "Все" },
-  { value: TASK_STATUS.queued, label: "В очереди" },
-  { value: TASK_STATUS.running, label: "Идет" },
-  { value: TASK_STATUS.done, label: "Готово" },
-  { value: TASK_STATUS.failed, label: "Ошибка" },
+  { value: "all", label: "Все", className: "w-[52px]" },
+  { value: TASK_STATUS.queued, label: "В очереди", className: "w-[95px]" },
+  { value: TASK_STATUS.running, label: "Идет", className: "w-[62px]" },
+  { value: TASK_STATUS.done, label: "Готово", className: "w-[72px]" },
+  { value: TASK_STATUS.failed, label: "Ошибка", className: "w-[79px]" },
 ];
 
 /** Опции сортировки из ТЗ и бонусные варианты селекторов. */
@@ -97,14 +98,15 @@ export function QueueToolbar({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between",
+        "flex flex-col gap-4 md:h-[34px] md:w-full md:flex-row md:items-center md:gap-3 lg:justify-start",
         className,
       )}
     >
-      <div className="no-scrollbar -mx-1 flex items-center gap-3 overflow-x-auto px-1">
+      <div className="no-scrollbar -mx-1 flex items-start gap-2 overflow-x-auto px-1 md:mx-0 md:h-[34px] md:w-[392px] md:flex-none md:overflow-visible md:px-0">
         {STATUS_FILTERS.map((filter) => (
           <QueueFilterChip
             active={activeStatus === filter.value}
+            className={filter.className}
             key={filter.value}
             onSelect={onStatusChange}
             value={filter.value}
@@ -114,7 +116,12 @@ export function QueueToolbar({
         ))}
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <span
+        aria-hidden="true"
+        className="hidden h-px w-[10px] flex-none md:block"
+      />
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center md:h-[34px] md:flex-none">
         {showTypeFilter && (
           <QueueSelect
             label="Тип"
@@ -125,6 +132,7 @@ export function QueueToolbar({
         )}
 
         <QueueSelect
+          className="md:w-[135px] md:min-w-[135px] lg:w-[135px] lg:min-w-[135px] [&>span:first-child]:w-[98px]"
           label="Сортировка"
           onValueChange={handleSortChange}
           options={SORT_OPTIONS}
