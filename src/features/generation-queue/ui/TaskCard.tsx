@@ -15,8 +15,7 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/tooltip";
 
-import { formatCredits } from "../lib/formatEta";
-import { formatTaskTime } from "../lib/formatTaskTime";
+import { formatCredits, formatTaskTime } from "../lib/formatEta";
 import { ProgressBar } from "./ProgressBar";
 import { StatusBadge } from "./StatusBadge";
 import { TaskActions } from "./TaskActions";

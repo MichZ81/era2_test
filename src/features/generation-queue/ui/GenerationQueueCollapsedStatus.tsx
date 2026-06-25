@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 
-import { pluralizeGenerationCount } from "../lib/formatGenerationTaskLabel";
+import { pluralizeGenerationCount } from "../lib/formatEta";
 
 export interface GenerationQueueCollapsedStatusProps {
   /** Общее количество queued + running задач. */

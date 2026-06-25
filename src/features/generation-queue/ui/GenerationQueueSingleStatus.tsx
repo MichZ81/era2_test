@@ -6,7 +6,7 @@ import { Link } from "@/shared/routing";
 import {
   getGenerationModelLabel,
   getGenerationTypeLabel,
-} from "../lib/formatGenerationTaskLabel";
+} from "../lib/formatEta";
 import { ProgressBar } from "./ProgressBar";
 
 export interface GenerationQueueSingleStatusProps {

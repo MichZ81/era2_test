@@ -17,7 +17,7 @@ import {
 import { Link } from "@/shared/routing";
 import { TaskIcon } from "@/shared/ui/task-icon";
 
-import { pluralizeActiveGenerations } from "../lib/formatGenerationTaskLabel";
+import { pluralizeActiveGenerations } from "../lib/formatEta";
 import { ProgressBar } from "./ProgressBar";
 
 export interface GenerationQueueMultipleStatusProps {
